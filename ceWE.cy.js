@@ -12,22 +12,22 @@ describe('Vérification du formulaire ce week-end', () => {
   it('cas passant - quand le formulaire est correct, popin succès', () => {
     let fakeUser = new FakeUser();
     cy.get('#nom').type(fakeUser.nom)
-    cy.get('[data-cy="prenom"]').type(fakeUser.prenom)
+    cy.get('[data-testid="prenom"]').type(fakeUser.prenom)
     cy.get('#ville').select('Awoingt');
     cy.get('#email').type(fakeUser.email);
     cy.get('#telephone').type(fakeUser.telephone);
-    cy.get('[data-cy="submit"]').click();
+    cy.get('[data-testid="submit"]').click();
     cy.get('#modal-content').should('not.be.hidden');
     cy.get('#modal-content > p').should('have.text', 'Merci pour vos informations ! 🌟 Nous nous occupons de tout pour que vous puissiez vivre une expérience\n                inoubliable. 🌍 Votre prochaine destination de rêve sera bientôt prête. Restez à l\'écoute ! 🗺️');
   })
 
   it('cas non passant - nom non renseigné', () => {
     let fakeUser = new FakeUser();
-    cy.get('[data-cy="prenom"]').type(fakeUser.prenom);
+    cy.get('[data-testid="prenom"]').type(fakeUser.prenom);
     cy.get('#ville').select('Awoingt');
     cy.get('#email').type(fakeUser.email);
     cy.get('#telephone').type(fakeUser.telephone);
-    cy.get('[data-cy="submit"]').click();
+    cy.get('[data-testid="submit"]').click();
     cy.get('#modal-content').should('be.hidden');
   })
 
@@ -37,17 +37,17 @@ describe('Vérification du formulaire ce week-end', () => {
     cy.get('#ville').select('Awoingt');
     cy.get('#email').type(fakeUser.email);
     cy.get('#telephone').type(fakeUser.telephone);
-    cy.get('[data-cy="submit"]').click();
+    cy.get('[data-testid="submit"]').click();
     cy.get('#modal-content').should('be.hidden');
   })
 
   it('cas passant - email non renseigné', () => {
     let fakeUser = new FakeUser();
     cy.get('#nom').type(fakeUser.nom);
-    cy.get('[data-cy="prenom"]').type(fakeUser.prenom);
+    cy.get('[data-testid="prenom"]').type(fakeUser.prenom);
     cy.get('#ville').select('Awoingt');
     cy.get('#telephone').type(fakeUser.telephone);
-    cy.get('[data-cy="submit"]').click();
+    cy.get('[data-testid="submit"]').click();
     cy.get('#modal-content').should('not.be.hidden');
     cy.get('#modal-content > p').should('have.text', 'Merci pour vos informations ! 🌟 Nous nous occupons de tout pour que vous puissiez vivre une expérience\n                inoubliable. 🌍 Votre prochaine destination de rêve sera bientôt prête. Restez à l\'écoute ! 🗺️');
   })
@@ -55,10 +55,10 @@ describe('Vérification du formulaire ce week-end', () => {
   it('cas passant - téléphone non renseigné', () => {
     let fakeUser = new FakeUser();
     cy.get('#nom').type(fakeUser.nom);
-    cy.get('[data-cy="prenom"]').type(fakeUser.prenom);
+    cy.get('[data-testid="prenom"]').type(fakeUser.prenom);
     cy.get('#ville').select('Awoingt');
     cy.get('#email').type(fakeUser.email);
-    cy.get('[data-cy="submit"]').click();
+    cy.get('[data-testid="submit"]').click();
     cy.get('#modal-content').should('not.be.hidden');
     cy.get('#modal-content > p').should('have.text', 'Merci pour vos informations ! 🌟 Nous nous occupons de tout pour que vous puissiez vivre une expérience\n                inoubliable. 🌍 Votre prochaine destination de rêve sera bientôt prête. Restez à l\'écoute ! 🗺️');
   })
@@ -66,9 +66,9 @@ describe('Vérification du formulaire ce week-end', () => {
   it('cas non passant - email et téléphone non renseigné', () => {
     let fakeUser = new FakeUser();
     cy.get('#nom').type(fakeUser.nom);
-    cy.get('[data-cy="prenom"]').type(fakeUser.prenom);
+    cy.get('[data-testid="prenom"]').type(fakeUser.prenom);
     cy.get('#ville').select('Awoingt');
-    cy.get('[data-cy="submit"]').click();
+    cy.get('[data-testid="submit"]').click();
     cy.get('#modal-content')
       .should('not.be.hidden')
       .and('have.text', 'Veuillez remplir au moins l\'adresse email ou le numéro de téléphone.');
