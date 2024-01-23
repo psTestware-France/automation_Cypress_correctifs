@@ -1,70 +1,77 @@
 const url = 'http://localhost:3030/ceWeekEnd.html';
 
-describe('Check valide form', () => {
+const FakeUser = require('../utils/FakeUser');
+
+describe('Vérification du formulaire ce week-end', () => {
   beforeEach(() => {
-    cy.viewport(1400, 1000)
-    cy.clearAllLocalStorage()
-    cy.clearAllSessionStorage()
-    cy.clearCookies()
+    cy.viewport(1400, 1000);
+    cy.clearCookies();
     cy.visit(url);
   })
 
-  it('cas passant - quand le formulaire est correct, popin succès', () => {
-    cy.get('#nom').type('Brunet')
-    cy.get('[data-cy="prenom"]').type('Etienne')
+  it.only('cas passant - quand le formulaire est correct, popin succès', () => {
+    let fakeUser = new FakeUser();
+    cy.get('#nom').type(fakeUser.nom)
+    cy.get('[data-cy="prenom"]').type(fakeUser.prenom)
     cy.get('#ville').select('Awoingt');
-    cy.get('#email').type('ebrunet@pstestware.fr');
-    cy.get('#telephone').type('0651040404');
+    cy.get('#email').type(fakeUser.email);
+    cy.get('#telephone').type(fakeUser.telephone);
     cy.get('[data-cy="submit"]').click();
     cy.get('#modal-content').should('not.be.hidden');
     cy.get('#modal-content > p').should('have.text', 'Merci pour vos informations ! 🌟 Nous nous occupons de tout pour que vous puissiez vivre une expérience\n                inoubliable. 🌍 Votre prochaine destination de rêve sera bientôt prête. Restez à l\'écoute ! 🗺️');
   })
 
   it('cas non passant - nom non renseigné', () => {
-    cy.get('[data-cy="prenom"]').type('Etienne');
+    let fakeUser = new FakeUser();
+    cy.get('[data-cy="prenom"]').type(fakeUser.prenom);
     cy.get('#ville').select('Awoingt');
-    cy.get('#email').type('ebrunet@pstestware.fr');
-    cy.get('#telephone').type('0651040404');
+    cy.get('#email').type(fakeUser.email);
+    cy.get('#telephone').type(fakeUser.telephone);
     cy.get('[data-cy="submit"]').click();
     cy.get('#modal-content').should('be.hidden');
   })
 
   it('cas non passant - prénom non renseigné', () => {
-    cy.get('#nom').type('Brunet');
+    let fakeUser = new FakeUser();
+    cy.get('#nom').type(fakeUser.nom);
     cy.get('#ville').select('Awoingt');
-    cy.get('#email').type('ebrunet@pstestware.fr');
-    cy.get('#telephone').type('0651040404');
+    cy.get('#email').type(fakeUser.email);
+    cy.get('#telephone').type(fakeUser.telephone);
     cy.get('[data-cy="submit"]').click();
     cy.get('#modal-content').should('be.hidden');
   })
 
   it('cas passant - email non renseigné', () => {
-    cy.get('#nom').type('Brunet');
-    cy.get('[data-cy="prenom"]').type('Etienne');
+    let fakeUser = new FakeUser();
+    cy.get('#nom').type(fakeUser.nom);
+    cy.get('[data-cy="prenom"]').type(fakeUser.prenom);
     cy.get('#ville').select('Awoingt');
-    cy.get('#telephone').type('0651040404');
+    cy.get('#telephone').type(fakeUser.telephone);
     cy.get('[data-cy="submit"]').click();
     cy.get('#modal-content').should('not.be.hidden');
     cy.get('#modal-content > p').should('have.text', 'Merci pour vos informations ! 🌟 Nous nous occupons de tout pour que vous puissiez vivre une expérience\n                inoubliable. 🌍 Votre prochaine destination de rêve sera bientôt prête. Restez à l\'écoute ! 🗺️');
   })
 
   it('cas passant - téléphone non renseigné', () => {
-    cy.get('#nom').type('Brunet');
-    cy.get('[data-cy="prenom"]').type('Etienne');
+    let fakeUser = new FakeUser();
+    cy.get('#nom').type(fakeUser.nom);
+    cy.get('[data-cy="prenom"]').type(fakeUser.prenom);
     cy.get('#ville').select('Awoingt');
-    cy.get('#email').type('ebrunet@pstestware.fr');
+    cy.get('#email').type(fakeUser.email);
     cy.get('[data-cy="submit"]').click();
     cy.get('#modal-content').should('not.be.hidden');
     cy.get('#modal-content > p').should('have.text', 'Merci pour vos informations ! 🌟 Nous nous occupons de tout pour que vous puissiez vivre une expérience\n                inoubliable. 🌍 Votre prochaine destination de rêve sera bientôt prête. Restez à l\'écoute ! 🗺️');
   })
 
   it('cas non passant - email et téléphone non renseigné', () => {
-    cy.get('#nom').type('Brunet');
-    cy.get('[data-cy="prenom"]').type('Etienne');
+    let fakeUser = new FakeUser();
+    cy.get('#nom').type(fakeUser.nom);
+    cy.get('[data-cy="prenom"]').type(fakeUser.prenom);
     cy.get('#ville').select('Awoingt');
     cy.get('[data-cy="submit"]').click();
-    cy.get('#modal-content').should('not.be.hidden');
-    cy.get('#modal-content').should('have.text', 'Veuillez remplir au moins l\'adresse email ou le numéro de téléphone.');
+    cy.get('#modal-content')
+      .should('not.be.hidden')
+      .and('have.text', 'Veuillez remplir au moins l\'adresse email ou le numéro de téléphone.');
   })
 
   it('Quand on arrive, la modale n\'est pas affichée', () => {
