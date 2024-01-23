@@ -4,15 +4,15 @@ describe('Remplir formulaire et vérifier les valeurs', () => {
 
     // Exercice 1
     cy.get('[data-cy="champs1"]').type('Bravo,');
-    cy.get('[data-cy="textarea1"]').type('tu es');
+    cy.get('[data-test="textarea1"]').type('tu es');
     // par texte
-    cy.get('[data-cy="select1"]').select('arrivé');
+    cy.get('[data-testid="select1"]').select('arrivé');
     // par value
-    cy.get('[data-cy="select-multiple1"]').select(['2', '3']);
-    cy.get('[data-cy="radio-opt2"]').check();
-    cy.get('[data-cy="check-opt1"]').uncheck();
-    cy.get('[data-cy="check-opt2"]').check();
-    cy.get('[data-cy="check-opt3"]').check();
-    cy.get('[data-cy="file1"]').selectFile("C:/ceWeekEnd/img/pull_blanc.jpg");
+    cy.get('[data-testid="select-multiple1"]').select(['2', '3']);
+    cy.get('[data-testid="radio-opt2"]').check();
+    cy.get('[data-testid="check-opt1"]').uncheck();
+    cy.get('[data-testid="check-opt2"]').check();
+    cy.get('[data-testid="check-opt3"]').check();
+    cy.get('[data-testid="file1"]').selectFile("C:/ceWeekEnd/img/pull_blanc.jpg");
   })
 })
