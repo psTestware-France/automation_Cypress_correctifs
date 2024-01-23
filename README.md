@@ -1,1 +1,1 @@
-# Code des exemples présents dans la formation
+# Corrections des exercicesde la formation
