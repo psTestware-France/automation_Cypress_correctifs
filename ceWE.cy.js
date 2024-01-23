@@ -9,7 +9,7 @@ describe('Vérification du formulaire ce week-end', () => {
     cy.visit(url);
   })
 
-  it.only('cas passant - quand le formulaire est correct, popin succès', () => {
+  it('cas passant - quand le formulaire est correct, popin succès', () => {
     let fakeUser = new FakeUser();
     cy.get('#nom').type(fakeUser.nom)
     cy.get('[data-cy="prenom"]').type(fakeUser.prenom)
