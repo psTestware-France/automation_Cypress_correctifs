@@ -1,1 +1,1 @@
-# Corrections des exercicesde la formation
+# Corrections des exercices de la formation
