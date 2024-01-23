@@ -1,33 +1,43 @@
 const url = 'http://localhost:3030/ouEstCharlie.html'
-const txt = '#child-2';
+const child = cy.get('#child-2');
 
 
-describe('Remplir formulaire et vérifier les valeurs', () => {
+describe('Où est Charlie ?', () => {
     
     beforeEach(() => {
         cy.visit(url);
     })
             
     it('Le texte contient Charlie', () => {
-        cy.get(txt).should('contain', 'Charlie')
+        cyElem.should('contain', 'Charlie')
     })
 
     it('Le texte est Charlie', () => {
-        cy.get(txt).should('have.text', 'Charlie')
+        cyElem.should('have.text', 'Charlie')
     })
 
     it('Le texte contient un terme', () => {
-        cy.get(txt).should('include.text', 'Fiona');
-        cy.get(txt).invoke('text').should('match', /Fiona/);
+        cyElem.should('include.text', 'Fiona');
+        cyElem.invoke('text').should('match', /Fiona/);
     })
 
     it('Le texte commence par Charlie', () => {
         // Le texte commence par
-        cy.get(txt).invoke('text').should('match', /^Charlie/);
+        cyElem.invoke('text').should('match', /^Charlie/);
     })
 
     it('Le texte fini par partager', () => {
         // Le texte fini par
-        cy.get(txt).invoke('text').should('match', /partager$/);
+        cyElem.invoke('text').should('match', /partager$/);
     })
 })
+
+
+const cyElem = '#element';
+
+describe('Où est Charlie ?', () => {
+    it('Le texte contient Charlie', () => {
+        cy.get(cyElem).should('contain', 'Charlie')
+    })
+})
+
