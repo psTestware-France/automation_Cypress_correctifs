@@ -2,6 +2,25 @@ const url = 'http://localhost:3030/ceWeekEnd.html';
 
 const FakeUser = require('../utils/FakeUser');
 
+
+
+async function getVille() {
+  let ville = '';
+  const apiUrl = 'https://geo.api.gouv.fr/departements/59/communes';
+
+  try {
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+    const randomCityIndex = Math.floor(Math.random() * data.length);
+    ville = data[randomCityIndex].nom;
+    console.log(ville); // Affiche le nom de la ville
+  } catch (error) {
+    console.error('Erreur lors de la récupération des données :', error);
+  }
+
+  return ville;
+}
+
 describe('Vérification du formulaire ce week-end', () => {
   beforeEach(() => {
     cy.viewport(1400, 1000);
@@ -13,7 +32,10 @@ describe('Vérification du formulaire ce week-end', () => {
     let fakeUser = new FakeUser();
     cy.get('#nom').type(fakeUser.nom)
     cy.get('[data-testid="prenom"]').type(fakeUser.prenom)
-    cy.get('#ville').select('Awoingt');
+    cy.wrap(getVille()).then(ville => {
+      cy.get('#ville').select(ville);
+    });
+    
     cy.get('#email').type(fakeUser.email);
     cy.get('#telephone').type(fakeUser.telephone);
     cy.get('[data-testid="submit"]').click();
@@ -80,13 +102,15 @@ describe('Vérification du formulaire ce week-end', () => {
 
   it('Le titre quand on arrive sur la page est correct', () => {
     cy.get('#titre').should('have.text', 'Ce week-end je m\'évade à ...')
+    cy.get('#titre').invoke('text').should('match', /^Ce week-end je m\'évade à/)
+    cy.get('#titre').invoke('text').should('to.match', /^Ce week-end je m\'évade à/)
   })
 
   it('le titre change bien quand on change de ville', () => {
     cy.get('#ville').select('Cambrai');
-    cy.get('#titre').invoke('text').should('match', /Cambrai !$/);
+    cy.get('#titre').invoke('text').should('match', /^Ce week-end je m\'évade à Cambrai !$/);
 
     cy.get('#ville').select('Awoingt');
-    cy.get('#titre').invoke('text').should('match', /Awoingt !$/);
+    cy.get('#titre').should('have.text', 'Ce week-end je m\'évade à Awoingt !');
   })
 })
