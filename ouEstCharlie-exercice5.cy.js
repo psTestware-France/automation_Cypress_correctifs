@@ -16,11 +16,14 @@ describe('Tests de la page où est Charlie', () => {
         cy.get(txt).invoke('text').should('to.match', /^Charlie$/);
     })
 
-    it.only('Le texte contient un terme', () => {
+    it('Le texte contient un terme', () => {
         cy.get(txt).should('include.text', 'Fiona, la musicienne');
         cy.get(txt).invoke('text').should('to.match', /Fiona, la musicienne/);
         cy.get(txt).should('contain', 'Fiona, la musicienne');
-        cy.contains(txt, /Fiona, la muscienne/); // Attention, ceci n'est pas une assertion explicite !
+        cy.contains(txt, /Fiona, la muscienne/); // Attention, ceci n'est pas une assertion explicite ! 
+                                                 // > Code moins clair 
+                                                 // > msg d'erreur moins détaillé
+                                                 // > Ne garantie pas que les conditions exactes sont vérifiées
     })
 
     it('Le texte commence par Charlie', () => {
@@ -28,8 +31,8 @@ describe('Tests de la page où est Charlie', () => {
         cy.get(txt).invoke('text').should('to.match', /^Charlie/);
     })
 
-    it('Le texte fini par partager', () => {
+    it.only('Le texte fini par partager', () => {
         // Le texte fini par
-        cy.get(txt).invoke('text').should('to.match', /partager$/);
+        cy.get(txt).invoke('text').should('match', /partager$/);
     })
 })
